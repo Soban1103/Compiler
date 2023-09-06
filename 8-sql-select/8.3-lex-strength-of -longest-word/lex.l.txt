@@ -1,0 +1,26 @@
+%{ 
+int counter = 0; 
+%} 
+
+%% 
+[a-zA-Z]+ 	{ if (yyleng > counter) 
+				{ 
+				counter = yyleng; 
+				} 
+			}
+%% 
+
+int main() { 
+yylex(); 
+printf("largest: %d", counter); 
+printf("\n"); 
+return 0;
+} 
+
+Output:
+$ lex lex_file.l
+$ gcc lex.yy.c -ll
+$ ./a.out
+fortunately happy satisfied
+^D
+largest: 11

@@ -1,0 +1,20 @@
+grammar Decl;
+//parser part
+decl : dtype ID '=' NUM ';' // E.g., "int x = 3;"
+       | dtype ID ';'          // E.g., "int x;"
+       ;
+dtype: 'int' | 'float' | 'double' 
+     ;
+//lexer part
+ID   : [a-zA-Z]+;
+NUM  : [0-9]+
+     | [0-9]+'.'[0-9]+
+     ;
+WS : [ \t\r\n]+ -> skip
+       ;
+
+Output:
+$ antlr4 Decl.g4
+$ javac Decl*.java
+$ grun Decl decl -gui
+float x=0.5;

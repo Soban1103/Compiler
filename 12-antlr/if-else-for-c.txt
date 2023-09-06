@@ -1,0 +1,41 @@
+grammar ifelse;
+
+s:  ifstmt 
+    |
+    ;
+ifstmt: IF '(' expr')' '{' stmt '}' elstmt
+      ;
+elstmt : ELSE '{' stmt '}'
+       |  ELSE IF  '(' expr ')' {' stmt '}'
+	|
+        ;
+expr :  ID
+        | NUM
+        | ID '=' expr
+        | expr BIN expr
+        | expr COMP expr
+	| '('expr')'
+        |
+	;
+stmt:	stmts stmt 
+	|
+	;
+stmts: 	ifstmt
+	| expr ';'
+	;
+
+//lexer part
+IF : 'if' ;
+ELSE : 'else' ;
+ID : [_a-zA-Z][_a-zA-Z0-9]* ;
+COMP : '>' | '<' | '>='|'<=' | '==' | '!=' ;
+BIN : '+' |'-'|'*' |'/' ;
+NUM : [0-9]+ ;
+WS : [ \t\r\n] -> skip ;
+
+ 
+Output:
+$ antlr4 ifelse.g4
+$ javac ifelse*.java
+$ grun ifelse s -gui
+if((a+b)<5) { a=a+5;}

@@ -1,0 +1,50 @@
+%{
+    #include <stdio.h>
+    #include <stdlib.h>
+    
+%}
+
+%token IF ELSE VARIABLE COMP BIN NUM
+
+%%
+
+s:  ifstmt { printf("Valid statement\n"); }
+    |
+    ;
+ifstmt: IF '(' expr')' '{' stmt '}' elstmt
+	;
+elstmt : ELSE ifstmt
+        | ELSE '{' stmt '}'
+        | 
+        ;
+expr:   | VARIABLE '=' expr
+        | expr BIN expr
+        | expr COMP expr
+	| '(' expr ')'
+        | VARIABLE
+	| NUM
+	;
+stmt:	stmts stmt 
+	|
+	;
+stmts: 	ifstmt
+	| expr ';'
+	;
+%%
+
+int main()
+{
+	yyparse();
+	return 0;
+}
+
+
+
+
+Output:
+
+$ lex lex_file.l
+$ yacc -d yacc_file.y
+$ gcc lex.yy.c y.tab.c -ll -ly
+$ ./a.out
+if((a+b)<5) { a=a+5;}

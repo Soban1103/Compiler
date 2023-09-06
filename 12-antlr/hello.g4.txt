@@ -1,0 +1,12 @@
+grammar Hello;
+r : hi*;
+hi : 'hello'ID;
+ID : [a-z]+;
+WS : [ \t\r\n]+ -> skip;
+
+
+Compilation and Execution steps:
+$ antlr4 Hello.g4   //antlr4 is an alias created as mentioned above
+$ javac Hello*.java
+$ grun Hello r -gui
+hello dipen hello all

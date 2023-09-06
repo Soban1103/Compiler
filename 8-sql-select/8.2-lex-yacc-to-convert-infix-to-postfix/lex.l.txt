@@ -1,0 +1,21 @@
+%{
+extern int yylval;
+#include "y.tab.h"
+%}
+
+%%
+
+[0-9]+  {yylval = atoi(yytext);return INTEGER;}
+[ \t]     /* skip whitespace */
+[\n]    {return 0;}
+.   {return *yytext;}
+%%
+
+Outout:
+$ lex lex_file.l
+$ yacc -d yacc_file.y	
+$ gcc lex.yy.c y.tab.c -ll -ly
+$./a.out
+2+3*5
+^d
+235*+
